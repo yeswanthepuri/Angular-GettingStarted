@@ -1,0 +1,23 @@
+<div class='card'>
+    <div class='card-header'>
+      {{pageTitle}}
+    </div>
+    <div class='card-body'>
+      <div class='row'>
+          <div class="col-lg-6">
+              {{product.productName}}
+            </div>
+            <div class="col-lg-6">
+                <img 
+                class="rounded float-right"
+                [style.width.px]='imageWidth'
+                [style.margin.px]='imageMargin'
+                [src]='product.imageUrl'
+                 >
+              </div>
+          </div>
+          <div class="col-lg-12">
+              <input class="btn btn-warning" type="button" (click)="onback()" value="Back">
+          </div>
+    </div>
+</div>

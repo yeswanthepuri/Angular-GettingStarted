@@ -1,0 +1,75 @@
+<div class='card'>
+  <div class='card-header'>
+    {{pageTitle}}
+  </div>
+  <div class='card-body'>
+    <div class='row'>
+      <div class='col-md-2'>Filter by:</div>
+      <div class='col-md-4'>
+        <input type='text'
+               [(ngModel)]='listFilter' />
+      </div>
+    </div>
+    <div class='row'
+         *ngIf='listFilter'>
+      <div class='col-md-6'>
+        <h4>Filtered by: {{listFilter}}</h4>
+      </div>
+    </div>
+    <div class='table-responsive'>
+      <table class='table'
+             *ngIf='products && products.length'>
+        <thead>
+          <tr>
+            <th>
+              <button class='btn btn-primary'
+                      (click)='toggleImage()'>
+                {{showImage ? 'Hide' : 'Show'}} Image
+              </button>
+            </th>
+            <th>Product</th>
+            <th>Code</th>
+            <th>Available</th>
+            <th>Price</th>
+            <th>5 Star Rating</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor='let product of filterProducts'>
+            <td>
+              <img *ngIf='showImage'
+                   [src]='product.imageUrl'
+                   [title]='product.productName'
+                   [style.width.px]='imageWidth'
+                   [style.margin.px]='imageMargin'>
+            </td>
+            <td>
+
+              {{ product.productName }}
+
+            </td>
+            <td>{{ product.productCode | lowercase |convertToSpace:'-'  }}</td>
+            <td>{{ product.releaseDate }}</td>
+            <td>{{ product.price | currency:'USD':'symbol':'1.2-2'}}</td>
+            <td>
+              <!--any nested component we can pass the value to the child component
+              by using model binding
+
+              and to get value back from the nested child component is to emit a event.
+              -->
+              <pm-star [rating]='product.starRating'
+                       (ratingClicked)=onratingClicked($event)></pm-star>
+            </td>
+            <td>
+              <a class="btn btn-primary"
+                 [routerLink]="['/product',product.productId]">
+                View</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h2>{{selectedRating}}</h2>
+    </div>
+  </div>
+</div>
